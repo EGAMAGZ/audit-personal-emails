@@ -1,4 +1,3 @@
-from typing import Literal
 import click
 import pandas as pd
 import pathlib
@@ -61,14 +60,13 @@ def main(input_file: str, output_file: str) -> None:
     csv_to_audit = pathlib.Path(input_file)
     audited_csv = pathlib.Path(output_file)
 
-    # Detect file encoding
     encodings_to_try = ['utf-16', 'utf-16-le', 'utf-16-be', 'utf-8', 'latin-1', 'cp1252', 'iso-8859-1']
     working_encoding = None
     
     for encoding in encodings_to_try:
         try:
             with open(csv_to_audit, 'r', encoding=encoding) as f:
-                f.readline()  # Test if we can read the first line
+                f.readline()
                 working_encoding = encoding
                 break
         except UnicodeDecodeError:
@@ -78,7 +76,6 @@ def main(input_file: str, output_file: str) -> None:
         print("Error: Could not determine file encoding")
         return
     
-    # Try different encodings and parsing methods
     original_csv = None
     parsing_methods = [
         {'encoding': working_encoding, 'engine': 'python'},
