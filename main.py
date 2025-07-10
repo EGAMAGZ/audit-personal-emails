@@ -119,6 +119,3 @@ def main(input_file: str, output_file: str) -> None:
     original_csv["sent_to_personal_acc"] = original_csv["recipient_status"].apply(is_personal_email)
 
     original_csv.to_excel(audited_csv, index=False)
-
-if __name__ == "__main__":
-    main()
